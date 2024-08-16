@@ -139,7 +139,6 @@
         }
 
         .progresion img{
-            
             width: 250px;
             border-radius: 30px;
         }
@@ -212,7 +211,59 @@
             transform: scale(1.1);
             box-shadow: 0 0 20px #E995A3;
         }
+
+        .dias {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .dia {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .dia input[type="radio"] {
+            display: none;
+        }
+
+        .dia label {
+            display: block;
+            padding: 10px 20px;
+            border: 2px solid #E995A3;
+            border-radius: 25px;
+            cursor: pointer;
+            color: #E995A3;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .dia input[type="radio"]:checked + label {
+            background-color: #E995A3;
+            color: white;
+        }
+
+        .hora {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .hora label {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .hora input[type="time"] {
+            padding: 10px;
+            border: 1px solid #E995A3;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <header></header>
@@ -227,7 +278,7 @@
                 <button class="option-button btn-reservar" id="reservar">Reservar Ahora</button>
             </div>
         </section>
-        <section class="progresion" id="progresion" >
+        <section class="progresion" id="progresion">
             <img src="juky.jpeg" alt="">
             <h2>Estas a punto de reservar una experiencia única</h2>
             <div class="barra"><div class="barra-inner" id="progressBar"></div></div>
@@ -241,7 +292,37 @@
                 <button class="pregunta-button btn-continuar1" id="continuar1">Continuar</button>
             </div>
             <div class="pregunta-item" id="step2">
-                <input type="datetime-local" class="pregunta-input" id="datetime" required>
+                <h2>Selecciona el Día</h2>
+                <div class="dias">
+                    <div class="dia">
+                        <input type="radio" id="lunes" name="dia" value="Lunes">
+                        <label for="lunes">Lunes</label>
+                    </div>
+                    <div class="dia">
+                        <input type="radio" id="martes" name="dia" value="Martes">
+                        <label for="martes">Martes</label>
+                    </div>
+                    <div class="dia">
+                        <input type="radio" id="miercoles" name="dia" value="Miércoles">
+                        <label for="miercoles">Miércoles</label>
+                    </div>
+                    <div class="dia">
+                        <input type="radio" id="jueves" name="dia" value="Jueves">
+                        <label for="jueves">Jueves</label>
+                    </div>
+                    <div class="dia">
+                        <input type="radio" id="viernes" name="dia" value="Viernes">
+                        <label for="viernes">Viernes</label>
+                    </div>
+                    <div class="dia">
+                        <input type="radio" id="sabado" name="dia" value="Sábado">
+                        <label for="sabado">Sábado</label>
+                    </div>
+                </div>
+                <div class="hora">
+                    <label for="hora">Selecciona la hora</label>
+                    <input type="time" id="hora" name="hora">
+                </div>
                 <button class="pregunta-button btn-continuar2" id="continuar2">Continuar</button>
             </div>
             <div class="pregunta-item" id="step3">
@@ -266,7 +347,7 @@
             const reservarButton = document.querySelector('.btn-reservar');
             const progressBar = document.getElementById('progressBar');
             const progresion = document.getElementById('progresion');
-
+    
             // Mostrar los títulos e imágenes de manera secuencial
             title1.classList.add('visible-h1');
             setTimeout(() => {
@@ -280,7 +361,7 @@
                 options.classList.remove('hidden');
                 options.classList.add('visible-options');
             }, 4500);
-
+    
             // Cambiar fondo y mostrar sección de preguntas al clicar en "Reservar Ahora"
             reservarButton.addEventListener('click', function() {
                 slider.style.backgroundImage = "url('fondojuly2.png')";
@@ -288,11 +369,11 @@
                 preguntas.style.display = "block";
                 options.style.display = "none";
                 progresion.style.display = "block";
-
+    
                 const preguntaItems = preguntas.querySelectorAll('.pregunta-item');
                 preguntaItems[0].classList.add('active');
                 updateProgressBar(33); // Inicializa la barra de progreso en 33%
-
+    
                 // Controlar la transición entre los pasos del formulario
                 document.getElementById('continuar1').addEventListener('click', function() {
                     const nombre = document.getElementById('nombre').value;
@@ -305,61 +386,63 @@
                         alert('Por favor, complete todos los campos obligatorios.');
                     }
                 });
-
+    
                 document.getElementById('continuar2').addEventListener('click', function() {
-                    const datetime = document.getElementById('datetime').value;
-                    if (datetime) {
+                    const diaSeleccionado = document.querySelector('input[name="dia"]:checked');
+                    const hora = document.getElementById('hora').value;
+                    if (diaSeleccionado && hora) {
                         preguntaItems[1].classList.remove('active');
                         preguntaItems[2].classList.add('active');
                         updateProgressBar(100); // Completa la barra de progreso al 100%
                     } else {
-                        alert('Por favor, seleccione una fecha y hora.');
+                        alert('Por favor, seleccione un día y una hora.');
                     }
                 });
-
+    
                 document.getElementById('finalizar').addEventListener('click', function() {
                     const nombre = document.getElementById('nombre').value;
                     const telefono = document.getElementById('telefono').value;
-                    const datetime = document.getElementById('datetime').value;
+                    const diaSeleccionado = document.querySelector('input[name="dia"]:checked');
+                    const hora = document.getElementById('hora').value;
                     const compromiso = document.getElementById('compromiso').checked;
                     const politicas = document.getElementById('politicas').checked;
-
-                    if (nombre && telefono && datetime && compromiso && politicas) {
+    
+                    if (nombre && telefono && diaSeleccionado && hora && compromiso && politicas) {
                         const data = {
                             nombre: nombre,
                             telefono: telefono,
-                            datetime: datetime,
+                            dia: diaSeleccionado.value,
+                            hora: hora,
                             compromiso: compromiso,
                             politicas: politicas
                         };
-
-                        // Aquí se realiza la petición al webhook
-                        fetch('https://your-webhook-url.com', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert('Información enviada con éxito');
-                            // Aquí puedes redirigir o mostrar un mensaje de éxito
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
+    
+    
+                        // Muestra una ventana emergente con los datos
+                        alert(`
+                            Tu Reserva se ha completado
+                            Nombre: ${data.nombre}
+                            Teléfono: ${data.telefono}
+                            Día: ${data.dia}
+                            Hora: ${data.hora}
+                            Compromiso: ${data.compromiso ? 'Aceptado' : 'No Aceptado'}
+                            Políticas: ${data.politicas ? 'Aceptado' : 'No Aceptado'}
+                        `);
+    
+                        // Aquí puedes redirigir o mostrar un mensaje de éxito
+                        // Por ejemplo: window.location.href = "gracias.html";
                     } else {
                         alert('Por favor, complete todos los campos y acepte las políticas.');
                     }
                 });
             });
-
+    
             // Función para actualizar la barra de progreso
             function updateProgressBar(percentage) {
                 progressBar.style.width = percentage + '%';
             }
         });
     </script>
+    
 </body>
 </html>
