@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Julieth</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Great Vibes', cursive;
+        }
+
+        .slider {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            background-image: url('fondojuly.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            transition: background-image 0.5s ease-in-out;
+        }
+
+        .main-image {
+            position: relative;
+            max-width: 80%;
+            transform: translateY(50px);
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        }
+
+        .hidden {
+            opacity: 0;
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .title {
+            color: #E995A3;
+            opacity: 0;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid;
+            letter-spacing: 3px;
+            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+
+        .title-h1 {
+            font-size: 4rem;
+            animation-delay: 0s;
+        }
+
+        .title-h2 {
+            font-size: 2.5rem;
+            animation-delay: 4s;
+        }
+
+        .visible-h1 {
+            opacity: 1;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #fff }
+        }
+
+        @media screen and (max-width: 768px) {
+            .title-h1 {
+                font-size: 2.5rem;
+            }
+
+            .title-h2 {
+                font-size: 20px;
+            }
+
+            .main-image {
+                max-width: 90%;
+            }
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+            transition: opacity 1s ease-in-out;
+            flex-wrap: wrap;
+        }
+
+        .option {
+            flex: 1;
+            text-align: center;
+        }
+
+        .option-button {
+            background-color: #E995A3;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 0 10px #E995A3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .option-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #E995A3;
+        }
+
+        .visible-options {
+            opacity: 1;
+        }
+
+        .progresion {
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .progresion img{
+            
+            width: 250px;
+            border-radius: 30px;
+        }
+
+        .barra {
+            width: 100%;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 10px 0;
+            height: 20px;
+        }
+
+        .barra-inner {
+            height: 100%;
+            background-color: #E995A3;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .preguntas {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+            max-width: 600px;
+            width: 100%;
+            margin: auto;
+            font-family: 'Raleway', sans-serif;
+        }
+
+        .pregunta-item {
+            margin: 20px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .pregunta-item.active {
+            opacity: 1;
+        }
+
+        .pregunta-input {
+            width: 90%;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #E995A3;
+            font-size: 20px;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        .pregunta-input::placeholder {
+            color: #888;
+            font-size: 15px;
+        }
+
+        .pregunta-button {
+            background-color: #E995A3;
+            border: 1px solid #E995A3;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 0 0 10px #E995A3;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pregunta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #E995A3;
+        }
+    </style>
+</head>
+<body>
+    <header></header>
+    <section class="slider" id="slider">
+        <h1 class="title title-h1" id="title1">YU Nails</h1>
+        <h2 class="title title-h2" id="title2">Disfruta de un trato único</h2>
+        <section class="options hidden" id="options">
+            <div class="option">
+                <button class="option-button btn-whatsapp">Reservar en WhatsApp</button>
+            </div>
+            <div class="option">
+                <button class="option-button btn-reservar" id="reservar">Reservar Ahora</button>
+            </div>
+        </section>
+        <section class="progresion" id="progresion" >
+            <img src="juky.jpeg" alt="">
+            <h2>Estas a punto de reservar una experiencia única</h2>
+            <div class="barra"><div class="barra-inner" id="progressBar"></div></div>
+        </section>
+        <section class="preguntas" id="preguntas">
+            <div class="pregunta-item" id="step1">
+                <h1>Te trataremos como una reina</h1>
+                <p>Al llegar te daremos agua o champagne</p>
+                <input type="text" class="pregunta-input" id="nombre" placeholder="Nombre Completo" required>
+                <input type="tel" class="pregunta-input" id="telefono" placeholder="Teléfono" required>
+                <button class="pregunta-button btn-continuar1" id="continuar1">Continuar</button>
+            </div>
+            <div class="pregunta-item" id="step2">
+                <input type="datetime-local" class="pregunta-input" id="datetime" required>
+                <button class="pregunta-button btn-continuar2" id="continuar2">Continuar</button>
+            </div>
+            <div class="pregunta-item" id="step3">
+                <div class="tic">
+                    <input type="checkbox" id="compromiso"><span>Me comprometo asistir y soy consciente de comunicar algún cambio, de lo contrario la empresa se reserva el derecho de admisión</span> <br>
+                    <input type="checkbox" id="politicas"><span>Acepto las Políticas y Comunicaciones de la Empresa para mejorar mi experiencia</span> <br>
+                    <button class="pregunta-button btn-finalizar" id="finalizar">Finalizar</button>
+                </div>
+            </div>
+        </section>
+        <img src="fotojuly.png" class="main-image hidden" id="main-image">
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const title1 = document.getElementById('title1');
+            const title2 = document.getElementById('title2');
+            const img = document.getElementById('main-image');
+            const options = document.getElementById('options');
+            const preguntas = document.getElementById('preguntas');
+            const slider = document.getElementById('slider');
+            const reservarButton = document.querySelector('.btn-reservar');
+            const progressBar = document.getElementById('progressBar');
+            const progresion = document.getElementById('progresion');
+
+            // Mostrar los títulos e imágenes de manera secuencial
+            title1.classList.add('visible-h1');
+            setTimeout(() => {
+                title2.classList.add('visible-h1');
+            }, 1500);
+            setTimeout(() => {
+                img.classList.remove('hidden');
+                img.classList.add('visible');
+            }, 3500);
+            setTimeout(() => {
+                options.classList.remove('hidden');
+                options.classList.add('visible-options');
+            }, 4500);
+
+            // Cambiar fondo y mostrar sección de preguntas al clicar en "Reservar Ahora"
+            reservarButton.addEventListener('click', function() {
+                slider.style.backgroundImage = "url('fondojuly2.png')";
+                img.src = "julyrespuestas.png";
+                preguntas.style.display = "block";
+                options.style.display = "none";
+                progresion.style.display = "block";
+
+                const preguntaItems = preguntas.querySelectorAll('.pregunta-item');
+                preguntaItems[0].classList.add('active');
+                updateProgressBar(33); // Inicializa la barra de progreso en 33%
+
+                // Controlar la transición entre los pasos del formulario
+                document.getElementById('continuar1').addEventListener('click', function() {
+                    const nombre = document.getElementById('nombre').value;
+                    const telefono = document.getElementById('telefono').value;
+                    if (nombre && telefono) {
+                        preguntaItems[0].classList.remove('active');
+                        preguntaItems[1].classList.add('active');
+                        updateProgressBar(66); // Actualiza la barra de progreso a 66%
+                    } else {
+                        alert('Por favor, complete todos los campos obligatorios.');
+                    }
+                });
+
+                document.getElementById('continuar2').addEventListener('click', function() {
+                    const datetime = document.getElementById('datetime').value;
+                    if (datetime) {
+                        preguntaItems[1].classList.remove('active');
+                        preguntaItems[2].classList.add('active');
+                        updateProgressBar(100); // Completa la barra de progreso al 100%
+                    } else {
+                        alert('Por favor, seleccione una fecha y hora.');
+                    }
+                });
+
+                document.getElementById('finalizar').addEventListener('click', function() {
+                    const nombre = document.getElementById('nombre').value;
+                    const telefono = document.getElementById('telefono').value;
+                    const datetime = document.getElementById('datetime').value;
+                    const compromiso = document.getElementById('compromiso').checked;
+                    const politicas = document.getElementById('politicas').checked;
+
+                    if (nombre && telefono && datetime && compromiso && politicas) {
+                        const data = {
+                            nombre: nombre,
+                            telefono: telefono,
+                            datetime: datetime,
+                            compromiso: compromiso,
+                            politicas: politicas
+                        };
+
+                        // Aquí se realiza la petición al webhook
+                        fetch('https://your-webhook-url.com', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(data)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            alert('Información enviada con éxito');
+                            // Aquí puedes redirigir o mostrar un mensaje de éxito
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                    } else {
+                        alert('Por favor, complete todos los campos y acepte las políticas.');
+                    }
+                });
+            });
+
+            // Función para actualizar la barra de progreso
+            function updateProgressBar(percentage) {
+                progressBar.style.width = percentage + '%';
+            }
+        });
+    </script>
+</body>
+</html>
